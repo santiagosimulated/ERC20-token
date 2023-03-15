@@ -1,21 +1,19 @@
-const dotenv = require("dotenv");
+require("@nomicfoundation/hardhat-toolbox");
 
-dotenv.config();
+require("dotenv").config();
 
-const {API_URL, PRIVATE_KEY} = process.env;
-
-
-
-
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- *
- */
-
-
+const {API_URL, PRIVATE_KEY1,FRANKLIN,MICHEAL} = process.env;
 
 module.exports = {
+  defaultNetwork: "goerli",
+  networks: {
+    hardhat: {
+    },
+    goerli: {
+      url: API_URL,
+      accounts: [PRIVATE_KEY1, FRANKLIN, MICHEAL,]
+    }
+  },
   solidity: {
     version: "0.8.9",
     settings: {
@@ -25,10 +23,13 @@ module.exports = {
       }
     }
   },
-  networks: {
-    goerli: {
-      url: API_URL,
-      accounts: [PRIVATE_KEY]
-    }
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
+  },
+  mocha: {
+    timeout: 40000
   }
-};
+}
